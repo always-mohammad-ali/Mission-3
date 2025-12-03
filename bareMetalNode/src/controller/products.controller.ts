@@ -16,8 +16,11 @@ export const productController =async (req : IncomingMessage, res : ServerRespon
     if(method === "GET" && url === "/products"){
         const products =  readProduct();
         res.writeHead(200, {"content-type" : "application/json"});
-        res.end(JSON.stringify({message : "eita /products route", data : products}))
+        res.end(JSON.stringify({message : "eita /products route", data : products}));
+        return;
     }
+    
+
     else if(method === "GET" && id !== null){
         const products =  readProduct();
 
@@ -26,7 +29,10 @@ export const productController =async (req : IncomingMessage, res : ServerRespon
 
         res.writeHead(200, {"content-type" : "application/json"});
         res.end(JSON.stringify({message : "eita /products route", data : product}))
+        return;
     }
+
+
     else if(method === "POST" && url === "/products"){
            const body = await parseBody(req);
           // console.log(body);
@@ -39,5 +45,28 @@ export const productController =async (req : IncomingMessage, res : ServerRespon
           products.push(newProduct);
          // console.log(products)
          writeProduct(products);
+
+        res.writeHead(201, {"content-type" : "application/json"});
+        res.end(JSON.stringify({message : "products created successfully", data : newProduct}))
+
+
+         return;
+    }
+
+    else if(method === "PUT" &&  id !== null){
+        const body = await parseBody(req);
+        console.log(body);
+        const products = readProduct();
+
+
+        const index = products.findIndex((p : IProduct) => p.id === id);
+        console.log(index);
+
+        if(index < 0){
+            res.writeHead(201, {"content-type" : "application/json"});
+
+            res.end(JSON.stringify({ message : "products not found"}))
+        }
+        return;
     }
 }
