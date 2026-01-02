@@ -147,6 +147,36 @@ app.get("/users/:id", async(req : Request, res : Response) =>{
 
 })
 
+//UPDATE SINGLE USER BY USING PUT
+app.put("/users/:id", async(req : Request, res : Response) =>{
+
+  const {name, email} = req.body;
+
+  try{
+
+    const result = await pool.query(`UPDATE users SET name=$1, email=$2 WHERE id=$3 RETURNING *`, [name, email, req.params.id]);
+
+    if(result.rows.length === 0){
+      res.status(404).json({
+            success : false,
+            message : "user id not found for update"
+      })
+    }else{
+      res.status(201).json({
+        success : true,
+        message : "update user data",
+        data : result.rows[0]
+      })
+    }
+
+  }catch(err : any){
+    res.status(500).json({
+      success : false,
+      message : err.message
+    })
+  }
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
