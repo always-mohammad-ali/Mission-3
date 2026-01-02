@@ -99,17 +99,17 @@ app.get("/users", async(req : Request, res: Response) =>{
 
     const result = await pool.query(`SELECT * FROM users`);
 
-    res.status(201).json({
+    res.status(200).json({
       success : true,
       message : "all user data retrieved done",
-      data : result.rows
+      data : result.rows,
     })
 
   }catch(err : any){
      res.status(500).json({
       success : false,
       message : err.message,
-      details : err
+     
      })
   }
 })
@@ -129,7 +129,7 @@ app.get("/users/:id", async(req : Request, res : Response) =>{
       message : "user not found"
     })
   }else{
-    res.status(201).json({
+    res.status(200).json({
       success : true,
       message : "single user data fetched successfully",
       data : result.rows[0]
@@ -176,6 +176,35 @@ app.put("/users/:id", async(req : Request, res : Response) =>{
     })
   }
 })
+
+//DELETE SINGLE USER BY USING DELETE METHOD
+app.delete("/users/:id", async(req : Request, res : Response) =>{
+  try{
+    const result = await pool.query(`DELETE FROM users WHERE id = $1`, [req.params.id,]);
+    //console.log(result) if you give, you will get rowCount value there, if it is 0, then there is no user, if there is any user, then it will delete and the rowCount will be 1;
+    if(result.rowCount === 0){
+      res.status(404).json({
+        success : false,
+        message : "user not found"
+      })
+    }else{
+      res.status(200).json({
+        success : true,
+        message : "user data deleted successfully",
+        deletedCount : result.rowCount,
+        data : result.rows
+      })
+    }
+  }catch(err : any){
+    res.status(500).json({
+      success : false,
+      message : err.message
+    })
+  }
+})
+
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
