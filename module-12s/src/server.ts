@@ -62,6 +62,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello World! hell yeah my goodness");
 });
 
+//USERS CRUD
 
 app.post("/users", async(req: Request, res: Response) => {
   //console.log(req.body);
@@ -89,13 +90,62 @@ app.post("/users", async(req: Request, res: Response) => {
     })
   }
 
-
-  res.status(201).json({
-    success: true,
-    message: "API is working man",
-  });
 });
 
+//FIND ALL USERS
+app.get("/users", async(req : Request, res: Response) =>{
+
+  try{
+
+    const result = await pool.query(`SELECT * FROM users`);
+
+    res.status(201).json({
+      success : true,
+      message : "all user data retrieved done",
+      data : result.rows
+    })
+
+  }catch(err : any){
+     res.status(500).json({
+      success : false,
+      message : err.message,
+      details : err
+     })
+  }
+})
+
+//GET SINGLE USER
+app.get("/users/:id", async(req : Request, res : Response) =>{
+ // console.log(req.params.id);
+ // res.send({ message : "single user is cool" });
+
+ try{
+
+  const result = await pool.query(`SELECT * FROM users WHERE id = $1`, [req.params.id]);
+  
+  if(result.rows.length === 0){
+    res.status(404).json({
+      success : false,
+      message : "user not found"
+    })
+  }else{
+    res.status(201).json({
+      success : true,
+      message : "single user data fetched successfully",
+      data : result.rows[0]
+    })
+  }
+
+ }catch(err : any){
+  res.status(500).json({
+    success : false,
+    message : err.message,
+    details : err
+  })
+ }
+
+
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
