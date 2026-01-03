@@ -36,37 +36,10 @@ app.use("/users", userRoutes)
 //app.get("/users", )  //IT WILL ALSO EXECUTE THROUGH ABOVE LINE app.use("/users", userRoutes)
 
 //GET SINGLE USER
-app.get("/users/:id", )
+//app.get("/users/:id", )
 
 //UPDATE SINGLE USER BY USING PUT
-app.put("/users/:id", async(req : Request, res : Response) =>{
-
-  const {name, email} = req.body;
-
-  try{
-
-    const result = await pool.query(`UPDATE users SET name=$1, email=$2 WHERE id=$3 RETURNING *`, [name, email, req.params.id]);
-
-    if(result.rows.length === 0){
-      res.status(404).json({
-            success : false,
-            message : "user id not found for update"
-      })
-    }else{
-      res.status(201).json({
-        success : true,
-        message : "update user data",
-        data : result.rows[0]
-      })
-    }
-
-  }catch(err : any){
-    res.status(500).json({
-      success : false,
-      message : err.message
-    })
-  }
-})
+//app.put("/users/:id", )
 
 //DELETE SINGLE USER BY USING DELETE METHOD
 app.delete("/users/:id", async(req : Request, res : Response) =>{

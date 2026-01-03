@@ -88,8 +88,39 @@ const getSingleUser = async(req : Request, res : Response) =>{
 
 }
 
+//FOR UPDATE SINGLE USER REQ AND RES
+const updateUser = async(req : Request, res : Response) =>{
+
+  const {name, email} = req.body;
+
+  try{
+
+    const result = await userServices.updateUser(name, email, req.params.id!); //you can use as string instead of "!"
+
+    if(result.rows.length === 0){
+      res.status(404).json({
+            success : false,
+            message : "user id not found for update"
+      })
+    }else{
+      res.status(201).json({
+        success : true,
+        message : "update user data",
+        data : result.rows[0]
+      })
+    }
+
+  }catch(err : any){
+    res.status(500).json({
+      success : false,
+      message : err.message
+    })
+  }
+}
+
 export const userController = {
     createUser,
     getUser,
-    getSingleUser
+    getSingleUser,
+    updateUser
 }

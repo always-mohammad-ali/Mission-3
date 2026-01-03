@@ -13,4 +13,7 @@ router.get("/", userController.getUser);
 //FOR GETTING SINGLE USER DATA
 router.get("/:id", userController.getSingleUser);
 
+//FOR UPDATING SINGLE USER DATA
+router.put("/:id", userController.updateUser);
+
 export const userRoutes = router;
