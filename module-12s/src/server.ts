@@ -241,6 +241,8 @@ app.get("/todos", async(req : Request, res: Response) =>{
 
     const result = await pool.query(`SELECT * FROM todos`);
 
+    
+
     res.status(200).json({
       success : true,
       message : "all todos data retrieved done",
@@ -253,6 +255,36 @@ app.get("/todos", async(req : Request, res: Response) =>{
       message : err.message,
      
      })
+  }
+})
+
+//GET SINGLE TODO LISTS BY CALLING SPECIFIC ID
+app.get("/todos/:id", async(req : Request, res : Response) =>{
+    
+  
+
+  try{
+      const result = await pool.query(`SELECT * FROM todos WHERE id=$1`,[req.params.id]);
+
+      if(result.rows.length === 0){
+      res.status(404).json({
+        success : false,
+        message : "id doesn't match with existing todo list"
+      })
+    }else{
+          res.status(200).json({
+        success : true,
+        message : "we get individuals todo list successfully by providing id",
+        data : result.rows[0],
+      })
+    }
+
+
+  }catch(err : any){
+    res.status(500).json({
+      success : false,
+      message : "there is no such todo list in that specific user id"
+    })
   }
 })
 
