@@ -33,26 +33,7 @@ app.use("/users", userRoutes)
 //app.post("/users", ); //instead of using this, we are now using the above line for making more concise and clear version for posting.
 
 //FIND ALL USERS
-app.get("/users", async(req : Request, res: Response) =>{
-
-  try{
-
-    const result = await pool.query(`SELECT * FROM users`);
-
-    res.status(200).json({
-      success : true,
-      message : "all user data retrieved done",
-      data : result.rows,
-    })
-
-  }catch(err : any){
-     res.status(500).json({
-      success : false,
-      message : err.message,
-     
-     })
-  }
-})
+//app.get("/users", )  //IT WILL ALSO EXECUTE THROUGH ABOVE LINE app.use("/users", userRoutes)
 
 //GET SINGLE USER
 app.get("/users/:id", async(req : Request, res : Response) =>{
