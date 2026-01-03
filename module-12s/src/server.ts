@@ -4,6 +4,7 @@ import initDB, { pool } from "./config/db";
 import logger from "./middleware/logger";
 import { userRoutes } from "./modules/users/user.routes";
 import { todosRouter } from "./modules/todos/todos.routes";
+import { authRoute } from "./modules/auth/auth.route";
 
 
 const app = express();
@@ -65,6 +66,10 @@ app.use("/todos", todosRouter)
 
 //DELETE TODO LIST BY MENTIONING ID
 //app.delete("/todos/:id", )
+
+
+//AUTH ROUTE HANDLING
+app.use("/auth", authRoute);
 
 
 // 404 NOT FOUND FOR INVALID URL 

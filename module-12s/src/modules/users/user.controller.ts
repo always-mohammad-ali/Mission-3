@@ -5,11 +5,11 @@ import { userServices } from "./user.service";
 //FOR POST USERS REQ AND RES HANDLER
 const createUser = async(req: Request, res: Response) => {
   //console.log(req.body);
-  const {name, email} = req.body;
+  //const {name, email} = req.body;
 
   try{
     //BUSINESS LOGIC WILL BE GONE TO SERVICES , AND THIS CONTROLLER RESPONSIBLE FOR HANDLING RES AND REQ.
-     const result = await userServices.createUser(name, email);
+     const result = await userServices.createUser(req.body);
 
     // console.log(result.rows[0]);
     // res.send({ message : "data inserted"})
