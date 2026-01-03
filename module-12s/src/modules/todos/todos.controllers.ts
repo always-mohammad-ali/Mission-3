@@ -72,8 +72,36 @@ const getSingleTodosPost = async(req : Request, res : Response) =>{
   }
 }
 
+const updateTodosPost = async(req : Request, res : Response) =>{
+    const { title, completed } = req.body;
+
+  try{
+    const result = await todosServices.updateTodosPost(title, completed, req.params.id as string);
+
+    if(result.rows.length === 0){
+      res.status(404).json({
+        success : false,
+        message : "such id doesn't found",
+      })
+    }else{
+      res.status(201).json({
+        success : true, 
+        message : "update todo list title successfully done",
+        data : result.rows[0],
+      })
+    }
+
+  }catch(err : any){
+    res.status(500).json({
+      success : false,
+      message : "there is no such id to update data about that"
+    })
+  }
+}
+
 export const todosControllers ={
     createTodosUsers,
      getTodosPost,
-     getSingleTodosPost
+     getSingleTodosPost,
+     updateTodosPost
 }

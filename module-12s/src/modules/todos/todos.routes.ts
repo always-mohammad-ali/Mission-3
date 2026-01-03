@@ -9,5 +9,7 @@ router.get("/", todosControllers.getTodosPost);
 
 router.get("/:id", todosControllers.getSingleTodosPost);
 
+router.put("/:id", todosControllers.updateTodosPost);
+
 
 export const todosRouter = router;

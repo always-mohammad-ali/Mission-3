@@ -56,36 +56,11 @@ app.use("/todos", todosRouter)
 //app.get("/todos",)
 
 //GET SINGLE TODO LISTS BY CALLING SPECIFIC ID
-app.get("/todos/:id", )
+//app.get("/todos/:id", )
 
 
 //UPDATE SINGLE TODO LIST TITLE 
-app.put("/todos/:id", async(req : Request, res : Response) =>{
-    const { title, completed } = req.body;
-
-  try{
-    const result = await pool.query(`UPDATE todos SET title=$1, completed=$2 WHERE id=$3 RETURNING *`, [title, completed, req.params.id]);
-
-    if(result.rows.length === 0){
-      res.status(404).json({
-        success : false,
-        message : "such id doesn't found",
-      })
-    }else{
-      res.status(201).json({
-        success : true, 
-        message : "update todo list title successfully done",
-        data : result.rows[0],
-      })
-    }
-
-  }catch(err : any){
-    res.status(500).json({
-      success : false,
-      message : "there is no such id to update data about that"
-    })
-  }
-})
+//app.put("/todos/:id", )
 
 
 //DELETE TODO LIST BY MENTIONING ID
