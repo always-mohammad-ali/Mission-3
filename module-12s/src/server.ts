@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import config from "./config";
 import initDB, { pool } from "./config/db";
+import logger from "./middleware/logger";
 
 
 const app = express();
@@ -10,18 +11,14 @@ const port = config.port;
 app.use(express.json());
 //app.use(express.urlencoded());
 
-//DATABASE
+//DATABASE WAS  BELOW HERE UNTIL INITDB(), BUT IT REMOVED TO db.ts FOR CLARITY IN SERVER.TS AND MORE EFFICIENT
 
 
-
+//INITIALIZING DATABASE
 initDB();
 
-// LOGGER MIDDLEWARE
-const logger = (req : Request, res : Response, next : NextFunction) =>{
-  
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}\n`);
-  next();
-}
+// LOGGER MIDDLEWARE was here down below, it also removed to distinct file
+
 
 
 app.get("/",logger, (req: Request, res: Response) => {
