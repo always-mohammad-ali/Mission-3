@@ -12,8 +12,15 @@ const getTodosPost = async() =>{
     return result;
 }
 
+const getSingleTodosPost = async(id : string) =>{
+    const result = await pool.query(`SELECT * FROM todos WHERE id=$1`,[id]);
+
+    return result;
+}
+
 export const todosServices = {
     createTodosUsers,
     getTodosPost,
+    getSingleTodosPost
 
 }

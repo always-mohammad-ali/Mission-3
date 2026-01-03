@@ -43,7 +43,37 @@ const getTodosPost =  async(req : Request, res: Response) =>{
   }
 }
 
+const getSingleTodosPost = async(req : Request, res : Response) =>{
+    
+  
+
+  try{
+      const result = await todosServices.getSingleTodosPost(req.params.id!);
+
+      if(result.rows.length === 0){
+      res.status(404).json({
+        success : false,
+        message : "id doesn't match with existing todo list"
+      })
+    }else{
+          res.status(200).json({
+        success : true,
+        message : "we get individuals todo list successfully by providing id",
+        data : result.rows[0],
+      })
+    }
+
+
+  }catch(err : any){
+    res.status(500).json({
+      success : false,
+      message : "there is no such todo list in that specific user id"
+    })
+  }
+}
+
 export const todosControllers ={
     createTodosUsers,
      getTodosPost,
+     getSingleTodosPost
 }
