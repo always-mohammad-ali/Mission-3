@@ -53,28 +53,7 @@ app.use("/todos", todosRouter)
 
 
 // GET ALL TODO LISTS
-app.get("/todos", async(req : Request, res: Response) =>{
-
-  try{
-
-    const result = await pool.query(`SELECT * FROM todos`);
-
-    
-
-    res.status(200).json({
-      success : true,
-      message : "all todos data retrieved done",
-      data : result.rows,
-    })
-
-  }catch(err : any){
-     res.status(500).json({
-      success : false,
-      message : err.message,
-     
-     })
-  }
-})
+//app.get("/todos",)
 
 //GET SINGLE TODO LISTS BY CALLING SPECIFIC ID
 app.get("/todos/:id", async(req : Request, res : Response) =>{

@@ -20,7 +20,30 @@ const createTodosUsers = async(req : Request, res : Response) =>{
   }
 }
 
+const getTodosPost =  async(req : Request, res: Response) =>{
+
+  try{
+
+    const result = await todosServices.getTodosPost();
+
+    
+
+    res.status(200).json({
+      success : true,
+      message : "all todos data retrieved done",
+      data : result.rows,
+    })
+
+  }catch(err : any){
+     res.status(500).json({
+      success : false,
+      message : err.message,
+     
+     })
+  }
+}
+
 export const todosControllers ={
     createTodosUsers,
-    
+     getTodosPost,
 }

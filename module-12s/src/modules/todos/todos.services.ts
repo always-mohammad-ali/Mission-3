@@ -6,7 +6,14 @@ const createTodosUsers = async(user_id : string, title : string) =>{
     return result;
 }
 
+const getTodosPost = async() =>{
+    const result = await pool.query(`SELECT * FROM todos`);
+
+    return result;
+}
+
 export const todosServices = {
     createTodosUsers,
-    
+    getTodosPost,
+
 }
