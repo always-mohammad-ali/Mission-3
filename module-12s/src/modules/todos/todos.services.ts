@@ -24,10 +24,16 @@ const updateTodosPost = async(title :string, completed : string, id : string) =>
     return result;
 }
 
+const deleteTodosPost = async(id : string) =>{
+    const result = await pool.query(`DELETE FROM todos WHERE id=$1`, [id]);
+    
+    return result;
+}
 export const todosServices = {
     createTodosUsers,
     getTodosPost,
     getSingleTodosPost,
-    updateTodosPost
+    updateTodosPost,
+    deleteTodosPost
 
 }

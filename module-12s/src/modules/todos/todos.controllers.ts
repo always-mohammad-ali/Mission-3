@@ -99,9 +99,39 @@ const updateTodosPost = async(req : Request, res : Response) =>{
   }
 }
 
+const deleteTodosPost = async(req : Request, res : Response) =>{
+
+  try{
+    
+    const result = await todosServices.deleteTodosPost(req.params.id!);
+
+    if(result.rowCount === 0){
+      res.status(404).json({
+        success : false,
+        message : "todos not found"
+      })
+    }else{
+      res.status(200).json({
+        success : true,
+        message : "todos data deleted successfully",
+        deletedCount : result.rowCount,
+        data : result.rows
+      })
+    }
+
+
+  }catch(err : any){
+    res.status(500).json({
+      success : false,
+      message : err.message
+    })
+  }
+}
+
 export const todosControllers ={
     createTodosUsers,
      getTodosPost,
      getSingleTodosPost,
-     updateTodosPost
+     updateTodosPost,
+     deleteTodosPost
 }

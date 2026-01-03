@@ -11,5 +11,7 @@ router.get("/:id", todosControllers.getSingleTodosPost);
 
 router.put("/:id", todosControllers.updateTodosPost);
 
+router.delete("/:id", todosControllers.deleteTodosPost);
+
 
 export const todosRouter = router;
