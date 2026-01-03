@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import config from "./config";
 import initDB, { pool } from "./config/db";
 import logger from "./middleware/logger";
+import { userRoutes } from "./modules/users/user.routes";
 
 
 const app = express();
@@ -27,33 +28,9 @@ app.get("/",logger, (req: Request, res: Response) => {
 
 //USERS CRUD
 
-app.post("/users", async(req: Request, res: Response) => {
-  //console.log(req.body);
-  const {name, email} = req.body;
-
-  try{
-     const result = await pool.query(`INSERT INTO users(name, email) VALUES($1, $2) RETURNING *`, [name, email]);
-
-    // console.log(result.rows[0]);
-    // res.send({ message : "data inserted"})
-
-    res.status(201).json({
-      success : true,
-      message : "data inserted successfully",
-      data : result.rows[0]
-
-    
-    })
-
-  }catch(err : any){
-    res.status(500).json({
-      success : false,
-      message : err.message,
-    
-    })
-  }
-
-});
+//POST USER DATA
+app.use("/users", userRoutes)
+//app.post("/users", ); //instead of using this, we are now using the above line for making more concise and clear version for posting.
 
 //FIND ALL USERS
 app.get("/users", async(req : Request, res: Response) =>{
