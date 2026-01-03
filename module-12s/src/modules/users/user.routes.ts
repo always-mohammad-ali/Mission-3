@@ -16,4 +16,7 @@ router.get("/:id", userController.getSingleUser);
 //FOR UPDATING SINGLE USER DATA
 router.put("/:id", userController.updateUser);
 
+//FOR DELETING SINGLE USER DATA
+router.delete("/:id", userController.deleteUser);
+
 export const userRoutes = router;

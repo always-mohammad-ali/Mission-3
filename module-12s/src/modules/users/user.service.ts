@@ -1,13 +1,13 @@
 import { pool } from "../../config/db";
 
-//BUSINESS LOGIC FOR CREATEUSER IN SERVICE USING POST
+//BUSINESS LOGIC FOR CREATEUSER IN USER DATA
 const createUser = async(name : string, email : string) =>{
     const result = await pool.query(`INSERT INTO users(name, email) VALUES($1, $2) RETURNING *`, [name, email]);
 
     return result;
 }
 
-//BUSINESS LOGIC FOR GET ALL USER DATA IN SERVICE USING GET
+//BUSINESS LOGIC FOR GET ALL USER DATA 
 const getUser = async() =>{
     const result = await pool.query(`SELECT * FROM users`);
 
@@ -15,7 +15,7 @@ const getUser = async() =>{
 }
 
 
-//BUSINESS LOGIC FOR GET SINGLE USER DATA IN SERVICE USING GET
+//BUSINESS LOGIC FOR GET SINGLE USER DATA 
 const getSingleUser = async(id :string) =>{
     const result = await pool.query(`SELECT * FROM users WHERE id = $1`, [id]);
 
@@ -23,10 +23,17 @@ const getSingleUser = async(id :string) =>{
 }
 
 
-//BUSINESS LOGIC FOR UPDATE SINGLE USER DATA IN SERVICE USING POST
+//BUSINESS LOGIC FOR UPDATE SINGLE USER DATA 
 const updateUser = async(name : string, email : string, id : string) =>{
     const result = await pool.query(`UPDATE users SET name=$1, email=$2 WHERE id=$3 RETURNING *`, [name, email, id]);
 
+    return result;
+}
+
+
+//BUSINESS LOGIC FOR DELETE SINGLE USER DATA 
+const deleteUser = async(id : string) =>{
+    const result = await pool.query(`DELETE FROM users WHERE id = $1`, [id]);
     return result;
 }
 
@@ -34,5 +41,6 @@ export const userServices ={
     createUser,
     getUser,
     getSingleUser,
-    updateUser
+    updateUser,
+    deleteUser
 }

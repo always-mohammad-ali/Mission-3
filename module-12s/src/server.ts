@@ -42,30 +42,7 @@ app.use("/users", userRoutes)
 //app.put("/users/:id", )
 
 //DELETE SINGLE USER BY USING DELETE METHOD
-app.delete("/users/:id", async(req : Request, res : Response) =>{
-  try{
-    const result = await pool.query(`DELETE FROM users WHERE id = $1`, [req.params.id,]);
-    //console.log(result) if you give, you will get rowCount value there, if it is 0, then there is no user, if there is any user, then it will delete and the rowCount will be 1;
-    if(result.rowCount === 0){
-      res.status(404).json({
-        success : false,
-        message : "user not found"
-      })
-    }else{
-      res.status(200).json({
-        success : true,
-        message : "user data deleted successfully",
-        deletedCount : result.rowCount,
-        data : result.rows
-      })
-    }
-  }catch(err : any){
-    res.status(500).json({
-      success : false,
-      message : err.message
-    })
-  }
-})
+//app.delete("/users/:id",)
 
 
 //TODOS CRUD OPERATION STARTS FROM HERE
