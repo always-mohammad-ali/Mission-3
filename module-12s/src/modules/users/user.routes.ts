@@ -5,9 +5,12 @@ import { userController } from "./user.controller";
 const router = express.Router();
 
 //FOR POSTING USER DATA INTO DATABASE
-router.post("/", userController.createUser)
+router.post("/", userController.createUser);
 
 //FOR GETTING ALL USER DATA
-router.get("/", userController.getUser)
+router.get("/", userController.getUser);
+
+//FOR GETTING SINGLE USER DATA
+router.get("/:id", userController.getSingleUser);
 
 export const userRoutes = router;

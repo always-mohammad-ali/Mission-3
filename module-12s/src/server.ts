@@ -36,37 +36,7 @@ app.use("/users", userRoutes)
 //app.get("/users", )  //IT WILL ALSO EXECUTE THROUGH ABOVE LINE app.use("/users", userRoutes)
 
 //GET SINGLE USER
-app.get("/users/:id", async(req : Request, res : Response) =>{
- // console.log(req.params.id);
- // res.send({ message : "single user is cool" });
-
- try{
-
-  const result = await pool.query(`SELECT * FROM users WHERE id = $1`, [req.params.id]);
-  
-  if(result.rows.length === 0){
-    res.status(404).json({
-      success : false,
-      message : "user not found"
-    })
-  }else{
-    res.status(200).json({
-      success : true,
-      message : "single user data fetched successfully",
-      data : result.rows[0]
-    })
-  }
-
- }catch(err : any){
-  res.status(500).json({
-    success : false,
-    message : err.message,
-    details : err
-  })
- }
-
-
-})
+app.get("/users/:id", )
 
 //UPDATE SINGLE USER BY USING PUT
 app.put("/users/:id", async(req : Request, res : Response) =>{
