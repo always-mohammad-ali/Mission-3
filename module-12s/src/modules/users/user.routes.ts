@@ -10,7 +10,7 @@ const router = express.Router();
 router.post("/", userController.createUser);
 
 //FOR GETTING ALL USER DATA
-router.get("/", logger, auth(), userController.getUser);
+router.get("/", logger, auth("auth"), userController.getUser);
 
 //FOR GETTING SINGLE USER DATA
 router.get("/:id", userController.getSingleUser);
